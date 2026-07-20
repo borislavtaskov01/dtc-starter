@@ -16,29 +16,41 @@ export default async function Nav() {
   ])
 
   return (
-    <div className="sticky top-0 inset-x-0 z-50 group">
-      <header className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base">
-        <nav className="content-container txt-xsmall-plus text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
-          <div className="flex-1 basis-0 h-full flex items-center">
-            <div className="h-full">
-              <SideMenu regions={regions} locales={locales} currentLocale={currentLocale} />
+    <div className="sticky top-0 inset-x-0 z-50">
+      <header className="border-b border-slate-200 bg-white/95 backdrop-blur-xl">
+        <nav className="content-container flex h-20 items-center justify-between gap-4 text-sm text-slate-600">
+          <div className="flex flex-1 basis-0 items-center gap-3">
+            <SideMenu regions={regions} locales={locales} currentLocale={currentLocale} />
+            <div className="hidden small:flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-xs font-medium text-slate-500 shadow-sm">
+              Curated essentials
             </div>
           </div>
 
-          <div className="flex items-center h-full">
+          <div className="flex items-center justify-center">
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
+              className="flex flex-col items-center text-center"
               data-testid="nav-store-link"
             >
-              Medusa Store
+              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-slate-500">
+                Medusa
+              </span>
+              <span className="text-lg font-semibold tracking-tight text-slate-950">
+                Modern Storefront
+              </span>
             </LocalizedClientLink>
           </div>
 
-          <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
-            <div className="hidden small:flex items-center gap-x-6 h-full">
+          <div className="flex flex-1 basis-0 items-center justify-end gap-3 small:gap-4">
+            <div className="hidden small:flex items-center gap-2">
               <LocalizedClientLink
-                className="hover:text-ui-fg-base"
+                className="rounded-full px-4 py-2 font-medium text-slate-600 transition-colors hover:bg-white hover:text-slate-950"
+                href="/store"
+              >
+                Shop
+              </LocalizedClientLink>
+              <LocalizedClientLink
+                className="rounded-full px-4 py-2 font-medium text-slate-600 transition-colors hover:bg-white hover:text-slate-950"
                 href="/account"
                 data-testid="nav-account-link"
               >
@@ -48,7 +60,7 @@ export default async function Nav() {
             <Suspense
               fallback={
                 <LocalizedClientLink
-                  className="hover:text-ui-fg-base flex gap-2"
+                  className="rounded-full border border-slate-200 bg-white px-4 py-2 font-medium text-slate-700 shadow-sm transition-colors hover:border-slate-300 hover:text-slate-950"
                   href="/cart"
                   data-testid="nav-cart-link"
                 >
