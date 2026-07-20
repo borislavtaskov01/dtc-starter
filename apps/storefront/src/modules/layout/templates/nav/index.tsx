@@ -20,9 +20,7 @@ export default async function Nav() {
       <header className="border-b border-slate-200/80 bg-slate-50/85 backdrop-blur-xl">
         <nav className="content-container flex h-20 items-center justify-between gap-4 text-sm text-slate-600">
           <div className="flex flex-1 basis-0 items-center gap-3">
-            <div className="h-full flex items-center">
-              <SideMenu regions={regions} locales={locales} currentLocale={currentLocale} />
-            </div>
+            <SideMenu regions={regions} locales={locales} currentLocale={currentLocale} />
             <div className="hidden small:flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-xs font-medium text-slate-500 shadow-sm">
               Curated essentials
             </div>
