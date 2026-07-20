@@ -65,7 +65,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                 <PopoverPanel className="flex flex-col absolute w-full pr-4 sm:pr-0 sm:w-[26rem] h-[calc(100vh-1rem)] z-[51] inset-x-0 text-sm text-ui-fg-on-color m-2 backdrop-blur-2xl">
                   <div
                     data-testid="nav-menu-popup"
-                    className="flex flex-col h-full justify-between rounded-[32px] border border-white/10 bg-[rgba(3,7,18,0.72)] p-6 shadow-2xl"
+                    className="flex flex-col h-full justify-between rounded-[32px] border border-white/15 bg-slate-950/95 p-6 shadow-2xl"
                   >
                     <div className="flex justify-end" id="xmark">
                       <button data-testid="close-menu-button" onClick={close}>

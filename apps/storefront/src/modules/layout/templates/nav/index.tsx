@@ -17,7 +17,7 @@ export default async function Nav() {
 
   return (
     <div className="sticky top-0 inset-x-0 z-50">
-      <header className="border-b border-slate-200/80 bg-slate-50/85 backdrop-blur-xl">
+      <header className="border-b border-slate-200 bg-white/95 backdrop-blur-xl">
         <nav className="content-container flex h-20 items-center justify-between gap-4 text-sm text-slate-600">
           <div className="flex flex-1 basis-0 items-center gap-3">
             <SideMenu regions={regions} locales={locales} currentLocale={currentLocale} />
