@@ -2,8 +2,9 @@
 applyTo: "**"
 ---
 
-Style Guide
-General Principles
+# Style Guide
+
+## General Principles
 Keep things in one function unless composable or reusable
 Do not extract single-use helpers preemptively. Inline the logic at the call site unless the helper is reused, hides a genuinely complex boundary, or has a clear independent name that improves the caller.
 Avoid try/catch where possible
@@ -21,7 +22,8 @@ const journal = await Bun.file(path.join(dir, "journal.json")).json()
 // Bad
 const journalPath = path.join(dir, "journal.json")
 const journal = await Bun.file(journalPath).json()
-Destructuring
+
+## Destructuring
 Avoid unnecessary destructuring. Use dot notation to preserve context.
 
 // Good
@@ -30,12 +32,14 @@ obj.b
 
 // Bad
 const { a, b } = obj
-Imports
+
+## Imports
 Never alias imports. Do not use import { foo as bar } from "..." or renamed imports like resolve as pathResolve.
 Never use star imports. Do not use import * as Foo from "..." or import type * as Foo from "...".
 If a namespace-style value is needed, import the module's own exported namespace by name, for example import { Project } from "@opencode-ai/core/project", then reference Project.ID.
 Prefer dynamic imports for heavy modules that are only needed in selected code paths, especially in startup-sensitive entrypoints. Destructure dynamic import bindings near the top of the narrowest scope that needs them so they read like normal imports. Avoid inline chains such as await import("./module").then((mod) => mod.value()) or (await import("./module")).value(). Keep branch-specific imports inside the branch that needs them to preserve lazy loading.
-Variables
+
+## Variables
 Prefer const over let. Use ternaries or early returns instead of reassignment.
 
 // Good
@@ -45,7 +49,8 @@ const foo = condition ? 1 : 2
 let foo
 if (condition) foo = 1
 else foo = 2
-Control Flow
+
+## Control Flow
 Avoid else statements. Prefer early returns.
 
 // Good
@@ -59,7 +64,8 @@ function foo() {
   if (condition) return 1
   else return 2
 }
-Complex Logic
+
+## Complex Logic
 When a function has several validation branches or supporting details, make the main function read as the happy path and move supporting details into small helpers below it.
 
 // Good
@@ -77,7 +83,8 @@ Do not over-abstract simple expressions into many single-use helpers; extract on
 Do not return Effect from helpers unless they actually perform effectful work. Synchronous parsing, validation, and option building should stay synchronous.
 Prefer Effect schema helpers such as Schema.UnknownFromJsonString and Schema.decodeUnknownOption over manual JSON.parse wrapped in Effect.try when parsing untrusted JSON strings.
 Add comments for non-obvious constraints and surprising behavior, not for obvious assignments or control flow.
-Schema Definitions (Drizzle)
+
+## Schema Definitions (Drizzle)
 Use snake_case for field names so column names don't need to be redefined as strings.
 
 // Good
@@ -93,13 +100,16 @@ const table = sqliteTable("session", {
   projectID: text("project_id").notNull(),
   createdAt: integer("created_at").notNull(),
 })
-Testing
+
+## Testing
 Avoid mocks as much as possible, you shouldn't be using globalThis.* at all unless it's the only option.
 Test actual implementation, do not duplicate logic into tests
 Tests cannot run from repo root (guard: do-not-run-tests-from-root); run from package dirs like packages/opencode.
-Type Checking
+
+## Type Checking
 Always run bun typecheck from package directories (e.g., packages/opencode), never tsc directly.
-V2 Session Core
+
+## V2 Session Core
 Keep durable prompt admission separate from model execution. SessionV2.prompt(...) admits one durable session_input row before scheduling advisory SessionExecution.wake(sessionID) unless resume: false requests admit-only behavior. The serialized runner promotes admitted inputs into visible user messages at safe boundaries.
 Reusing a Session ID adopts the existing Session. Reusing a prompt message ID reconciles an exact retry only when Session, prompt, and delivery mode match; conflicting reuse fails. Historical projected prompts lazily synthesize promoted inbox records during exact retry.
 Keep SessionExecution process-global and Session-ID based. Its local implementation owns the process-local Session coordinator and discovers placement through SessionStore plus LocationServiceMap.get(session.location) only when a drain starts; no layer should take a Session ID. V2 interruption targets the active process-local ownership chain for that Session; idle or missing interruption is a no-op.
